@@ -75,7 +75,7 @@ func (ctrl ExampleController) Body() {
 }
 
 func TokenFilter(ctx *context.Context) {
-	token := ctx.Input.Query("token")
+	token := ctx.Input.Header("token")
 	if token == "" {
 		ctx.Output.SetStatus(401)
 		_ = ctx.JSONResp(models.ErrorResponseWithCode(401, "authorization required"))

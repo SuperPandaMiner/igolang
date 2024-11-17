@@ -52,7 +52,7 @@ func dbDialector(driver string) gorm.Dialector {
 
 func dbConnection(dialector gorm.Dialector) *gorm.DB {
 	loggerLevel := logger.Info
-	if engine.Mode() == engine.Prod {
+	if engine.IsModeProd() {
 		loggerLevel = logger.Warn
 	}
 	gormConfig := gorm.Config{

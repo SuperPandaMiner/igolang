@@ -14,16 +14,15 @@ func init() {
 
 	routers.HandlerRegisterFunc = func(root *gin.RouterGroup) {
 		root.Use(tokenFilter)
-		testGroup := root.Group("test")
-		testGroup.GET("/success", success)
-		testGroup.GET("/400", badRequest)
-		testGroup.GET("/401", authentication)
-		testGroup.GET("/403", forbidden)
-		testGroup.GET("/500", internalServerError)
-		testGroup.GET("/panic", _panic)
-		testGroup.GET("/query", query)
-		testGroup.GET("/path/:id", path)
-		testGroup.POST("/post", post)
+		root.GET("/success", success)
+		root.GET("/400", badRequest)
+		root.GET("/401", authentication)
+		root.GET("/403", forbidden)
+		root.GET("/500", internalServerError)
+		root.GET("/panic", _panic)
+		root.GET("/query", query)
+		root.GET("/path/:id", path)
+		root.POST("/post", post)
 	}
 
 }
@@ -81,7 +80,7 @@ func post(ctx *gin.Context) {
 }
 
 func tokenFilter(ctx *gin.Context) {
-	token := ctx.Query("token")
+	token := ctx.GetHeader("token")
 	if token == "" {
 		abortWithCode(ctx, 401, errors.New("authorization required"))
 	}

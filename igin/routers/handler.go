@@ -9,31 +9,25 @@ import (
 	"igin/models"
 	"net/http"
 	"strings"
-	"time"
 )
 
-func notFound() gin.HandlerFunc {
+func notFoundHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, models.ErrorResponseWithCode(http.StatusNotFound, "page not found"))
 	}
 }
 
-func corsConfig() cors.Config {
+func corsHandler() gin.HandlerFunc {
 	corsConf := cors.Config{
-		MaxAge:                 12 * time.Hour,
-		AllowBrowserExtensions: true,
+		AllowAllOrigins: true,
+		AllowMethods:    []string{"GET", "POST", "DELETE", "OPTIONS", "PUT"},
+		AllowHeaders:    []string{"Authorization", "content-Type", "Upgrade", "Origin", "Connection", "Accept-Encoding", "Accept-Language", "Host"},
 	}
 
-	corsConf.AllowAllOrigins = true
-	corsConf.AllowMethods = []string{"GET", "POST", "DELETE", "OPTIONS", "PUT"}
-	corsConf.AllowHeaders = []string{
-		"Authorization", "content-Type", "Upgrade", "Origin", "Connection", "Accept-Encoding", "Accept-Language", "Host",
-	}
-
-	return corsConf
+	return cors.New(corsConf)
 }
 
-func responseHandler() gin.HandlerFunc {
+func errorHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Next()
 

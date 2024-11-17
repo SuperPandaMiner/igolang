@@ -26,7 +26,7 @@ func Init() {
 	}))
 
 	// api
-	root := web.NewNamespace("/api")
+	root := web.NewNamespace("/ibeego")
 	ControllerRegisterFunc(root)
 	web.AddNamespace(root)
 }

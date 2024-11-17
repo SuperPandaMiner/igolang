@@ -13,17 +13,20 @@ import (
 )
 
 const (
-	Dev  = "dev"
-	Prod = "prod"
+	dev  = "dev"
+	prod = "prod"
 )
 
-var mode = Dev
+var mode = dev
 
 var ShutDown func()
 
 func Run() {
 	mode = iconfig.Server.Mode
-	updateGinMode()
+
+	if IsModeProd() {
+		gin.SetMode(gin.ReleaseMode)
+	}
 
 	engine := routers.Router()
 
@@ -52,13 +55,6 @@ func Mode() string {
 	return mode
 }
 
-func updateGinMode() {
-	switch mode {
-	case Dev:
-		gin.SetMode(gin.DebugMode)
-	case Prod:
-		gin.SetMode(gin.ReleaseMode)
-	default:
-		panic("unsupported mode")
-	}
+func IsModeProd() bool {
+	return mode != dev
 }
