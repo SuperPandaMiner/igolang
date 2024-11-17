@@ -1,5 +1,5 @@
 # igolang
-golang web脚手架，纯后端项目，封装了一些常用的项目基本功能，包括：
+golang web 脚手架，纯后端项目，封装了一些常用的项目基本功能，包括：
 - web framework：gin，beego； 
 - config：配置读取；
 - logger：日志打印，日志文件分割；
