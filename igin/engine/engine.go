@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"igin/config/iconfig"
+	"iconfig"
 	"igin/routers"
 	"ilogger"
 	"net/http"

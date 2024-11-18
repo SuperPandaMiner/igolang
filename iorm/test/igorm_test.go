@@ -1,40 +1,44 @@
-package iorm
+package test
 
 import (
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
-	"igin/config"
-	"igin/logger"
-	"igin/models"
+	"iconfig"
+	"iconfig/jinzhu"
+	"ilogger"
+	"ilogger/izap"
+	"iorm"
 	"testing"
 )
 
 type Example struct {
-	models.Model
+	iorm.Model
 	String string
 	Text   string `gorm:"type:TEXT"`
 	Bool   bool
 	Parent int64
 }
 
-func init() {
-	config.Init("../config.yml")
-
-	logger.Init()
-
-	//AutoMigrateModels = append(AutoMigrateModels, &Example{})
-	Init()
-
-	exampleOrm = &ExampleOrm{}
-}
-
 func (Example) TableName() string {
 	return "example"
 }
 
+func init() {
+	jinzhu.Register("config.yml")
+	iconfig.Init()
+
+	izap.Register()
+	ilogger.Init()
+
+	iorm.AutoMigrateModels = append(iorm.AutoMigrateModels, &Example{})
+	iorm.Init()
+
+	exampleOrm = &ExampleOrm{}
+}
+
 type ExampleOrm struct {
-	IGorm[Example]
+	iorm.IGorm[Example]
 }
 
 var exampleOrm *ExampleOrm
@@ -52,24 +56,24 @@ func TestFind(t *testing.T) {
 	// 查询
 	exampleOrm.Find()
 	// 倒序条件
-	exampleOrm.Find(Desc())
+	exampleOrm.Find(iorm.Desc())
 	// 添加自定义条件
-	exampleOrm.Find(Desc(), WithCondition(conditionFunc))
+	exampleOrm.Find(iorm.Desc(), iorm.WithCondition(conditionFunc))
 	// 真实查询
-	exampleOrm.UnScoped().Find(Desc(), WithCondition(conditionFunc))
+	exampleOrm.UnScoped().Find(iorm.Desc(), iorm.WithCondition(conditionFunc))
 
 	// 添加查询字段
-	exampleOrm.Find(Desc(), WithCondition(conditionFunc), SelectCols("text"))
-	exampleOrm.UnScoped().Find(Desc(), WithCondition(conditionFunc), SelectCols("text", "string"))
+	exampleOrm.Find(iorm.Desc(), iorm.WithCondition(conditionFunc), iorm.SelectCols("text"))
+	exampleOrm.UnScoped().Find(iorm.Desc(), iorm.WithCondition(conditionFunc), iorm.SelectCols("text", "string"))
 
 	// 查询
 	exampleOrm.FindWithPaging(1, 10)
 	// 倒序条件
-	exampleOrm.FindWithPaging(1, 10, Desc())
+	exampleOrm.FindWithPaging(1, 10, iorm.Desc())
 	// 添加自定义条件
-	exampleOrm.FindWithPaging(1, 10, Desc(), WithCondition(conditionFunc))
+	exampleOrm.FindWithPaging(1, 10, iorm.Desc(), iorm.WithCondition(conditionFunc))
 	// 真实查询
-	exampleOrm.UnScoped().FindWithPaging(1, 10, Desc(), WithCondition(conditionFunc))
+	exampleOrm.UnScoped().FindWithPaging(1, 10, iorm.Desc(), iorm.WithCondition(conditionFunc))
 
 	// 根据 id 查询
 	exampleOrm.GetById(1)
@@ -79,8 +83,8 @@ func TestFind(t *testing.T) {
 
 	// count
 	exampleOrm.Count()
-	exampleOrm.Count(WithCondition(conditionFunc))
-	exampleOrm.UnScoped().Count(WithCondition(conditionFunc))
+	exampleOrm.Count(iorm.WithCondition(conditionFunc))
+	exampleOrm.UnScoped().Count(iorm.WithCondition(conditionFunc))
 
 	// 根据 id 列表查询
 	exampleOrm.FindByIdList([]int64{1, 2})
@@ -128,7 +132,7 @@ func TestUpdate(t *testing.T) {
 	})
 
 	// 根据 map 更新
-	gMap := GMap{}
+	gMap := iorm.GMap{}
 	gMap["text"] = "new text"
 	gMap["string"] = "new string"
 	gMap["bool"] = false
@@ -180,9 +184,9 @@ func TestScan(t *testing.T) {
 
 	var results []*Result
 	// 查询
-	tx := exampleOrm.TxWrapper(Desc(), WithCondition(conditionFunc))
+	tx := exampleOrm.TxWrapper(iorm.Desc(), iorm.WithCondition(conditionFunc))
 	tx.Scan(&results)
-	tx = exampleOrm.UnScoped().TxWrapper(Desc(), WithCondition(conditionFunc))
+	tx = exampleOrm.UnScoped().TxWrapper(iorm.Desc(), iorm.WithCondition(conditionFunc))
 	tx.Scan(&results)
 
 	// join

@@ -1,18 +1,14 @@
-package izap
+package test
 
 import (
 	"ilogger"
+	"ilogger/izap"
 	"testing"
 )
 
 func Test(t *testing.T) {
-	config := Config{
-		Out:          ilogger.ConsoleLog,
-		Level:        ilogger.DebugLevel,
-		LoggerNumber: 1,
-	}
-	// 注册 LoggerRegisterFunc
-	Register(&config)
+	// izap 注册 LoggerRegisterFunc
+	izap.Register()
 	// 初始化
 	ilogger.Init()
 

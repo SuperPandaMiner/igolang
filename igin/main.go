@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"igin/config"
 	"igin/engine"
-	"igin/iorm"
 	"igin/logger"
+	"igin/orm"
 	"igin/routers"
 	"ilogger"
 	"net/http"
@@ -20,7 +20,7 @@ func main() {
 
 	logger.Init()
 
-	iorm.Init()
+	orm.Init()
 
 	routers.HandlerRegisterFunc = func(root *gin.RouterGroup) {
 		root.GET("/ping", func(ctx *gin.Context) {
@@ -37,7 +37,7 @@ func main() {
 
 	engine.ShutDown()
 
-	iorm.Close()
+	orm.Close()
 
 	ilogger.Close()
 

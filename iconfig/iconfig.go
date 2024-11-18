@@ -35,28 +35,57 @@ type LoggerConfig struct {
 	MaxAge int
 	// 保留旧文件的最大个数，默认不限制
 	MaxBackups int
-	// izap 是否开启日志压缩，默认不开启
-	Compress bool
 	// 指定日志编号，指定编号则不会读取日志编号文件中的数值
 	LoggerNumber uint64
 }
 
-type ConfigLoader interface {
-	LoadServerConfig() *ServerConfig
-	LoadDatabaseConfig() *DatabaseConfig
-	LoadLoggerConfig() *LoggerConfig
+type ZapConfig struct {
+	LoggerConfig
+	// 是否开启日志压缩，默认不开启
+	Compress bool
 }
 
-var Server = &ServerConfig{}
-var Database = &DatabaseConfig{}
-var Logger = &LoggerConfig{}
+type ConfigLoader interface {
+	LoadServerConfig(*ServerConfig)
+	LoadDatabaseConfig(*DatabaseConfig)
+	LoadLoggerConfig(*LoggerConfig)
+	LoadZapConfig(*ZapConfig)
+}
+
+var Server = &ServerConfig{
+	Mode: "dev",
+}
+var Database = &DatabaseConfig{
+	MaxIdle:     5,
+	MaxOpen:     100,
+	MaxLifeTime: 10,
+}
+var Logger = &LoggerConfig{
+	Out:          "console",
+	Level:        "info",
+	MaxSize:      10,
+	MaxAge:       7,
+	MaxBackups:   0,
+	LoggerNumber: 0,
+}
+var Zap = &ZapConfig{
+	LoggerConfig: LoggerConfig{
+		Out:          "console",
+		Level:        "info",
+		MaxSize:      10,
+		MaxAge:       7,
+		MaxBackups:   0,
+		LoggerNumber: 0,
+	},
+}
 var Loader ConfigLoader
 
 func Init() {
 	if Loader == nil {
 		panic("Loader has not been initialized")
 	}
-	Server = Loader.LoadServerConfig()
-	Database = Loader.LoadDatabaseConfig()
-	Logger = Loader.LoadLoggerConfig()
+	Loader.LoadServerConfig(Server)
+	Loader.LoadDatabaseConfig(Database)
+	Loader.LoadLoggerConfig(Logger)
+	Loader.LoadZapConfig(Zap)
 }

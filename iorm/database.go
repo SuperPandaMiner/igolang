@@ -4,8 +4,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"igin/config/iconfig"
-	"igin/engine"
+	"iconfig"
 	"ilogger"
 	"log"
 	"time"
@@ -52,7 +51,7 @@ func dbDialector(driver string) gorm.Dialector {
 
 func dbConnection(dialector gorm.Dialector) *gorm.DB {
 	loggerLevel := logger.Info
-	if engine.IsModeProd() {
+	if iconfig.Server.Mode == "prod" {
 		loggerLevel = logger.Warn
 	}
 	gormConfig := gorm.Config{

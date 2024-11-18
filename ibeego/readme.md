@@ -2,7 +2,7 @@
 运行 main 文件 main 函数可以启动服务，主要模块包括：conf，controllers，iorm，logger，可参考模块目录下 test 文件示例。
 
 ## iorm 示例
-基于 gorm 封装了实体泛型，通用 crud 方法等。swagger 文档生成请参考 swagger 模块。
+基于 beego orm 封装了实体泛型，通用 crud 方法等。swagger 文档生成请参考 swagger 模块。
 
 为 beego 添加了软删除机制，调用 UnScoped() 方法代表进入真实查询或者真实删除模式。
 

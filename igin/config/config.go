@@ -1,8 +1,8 @@
 package config
 
 import (
-	"igin/config/iconfig"
-	"igin/config/jinzhu"
+	"iconfig"
+	"iconfig/jinzhu"
 )
 
 func Init(file string) {
