@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	config.Init("../config.yml")
+	config.Init("../../config.yml")
 
 	routers.HandlerRegisterFunc = func(root *gin.RouterGroup) {
 		root.Use(tokenFilter)

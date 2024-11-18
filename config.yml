@@ -5,7 +5,7 @@ server:
 
 database:
     driver: mysql
-    url: root:123456@tcp(127.0.0.1:3306)/igin?charset=utf8mb4&parseTime=true&loc=Local
+    url: root:123456@tcp(127.0.0.1:3306)/iorm?charset=utf8mb4&parseTime=true&loc=Local
     autoddl: true
 
 logger:

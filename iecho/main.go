@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"igin/config"
-	"igin/engine"
-	"igin/logger"
-	"igin/orm"
-	"igin/routers"
+	"github.com/labstack/echo/v4"
+	"iecho/config"
+	"iecho/engine"
+	"iecho/logger"
+	"iecho/orm"
+	"iecho/routers"
 	"ilogger"
 	"net/http"
 	"os"
@@ -15,16 +15,15 @@ import (
 )
 
 func main() {
-
 	config.Init("../config.yml")
 
 	logger.Init()
 
 	orm.Init()
 
-	routers.HandlerRegisterFunc = func(root *gin.RouterGroup) {
-		root.GET("/ping", func(ctx *gin.Context) {
-			ctx.JSON(http.StatusOK, "hello world")
+	routers.HandlerRegisterFunc = func(root *echo.Group) {
+		root.GET("/ping", func(ctx echo.Context) error {
+			return ctx.JSON(http.StatusOK, "hello world")
 		})
 	}
 	engine.Run()
@@ -33,7 +32,7 @@ func main() {
 	// kill -2，kill -15
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	sig := <-quit
-	ilogger.Warn("received signal: %s", sig)
+	ilogger.Warn("received signal: %s\n", sig)
 
 	engine.ShutDown()
 

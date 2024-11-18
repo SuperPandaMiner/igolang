@@ -1,0 +1,82 @@
+definitions:
+  main.ViewVO:
+    properties:
+      bool:
+        description: 布尔
+        type: boolean
+      number:
+        description: 数字
+        type: integer
+      string:
+        description: 字符串
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /swaggo/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get
+      parameters:
+      - description: id
+        in: path
+        name: id
+        type: string
+      - description: 字符串
+        in: query
+        name: string
+        type: string
+      - description: 布尔
+        in: query
+        name: bool
+        type: boolean
+      - description: 数字
+        in: query
+        name: number
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ViewVO'
+      security:
+      - ACCESS_TOKEN: []
+      summary: get
+      tags:
+      - api
+  /swaggo/post:
+    post:
+      consumes:
+      - application/json
+      description: post
+      parameters:
+      - description: params
+        in: body
+        name: params
+        required: true
+        schema:
+          $ref: '#/definitions/main.ViewVO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.ViewVO'
+            type: array
+      security:
+      - ACCESS_TOKEN: []
+      summary: post
+      tags:
+      - api
+securityDefinitions:
+  ACCESS_TOKEN:
+    in: header
+    name: access_token
+    type: apiKey
+swagger: "2.0"

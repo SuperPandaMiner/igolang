@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"igin/config"
+	"iecho/config"
 	"ilogger"
 	"testing"
 )
