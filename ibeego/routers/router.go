@@ -32,4 +32,4 @@ func Init() {
 }
 
 // ControllerRegisterFunc 在根路由下添加 api
-var ControllerRegisterFunc func(root *web.Namespace) = func(root *web.Namespace) {}
+var ControllerRegisterFunc = func(root *web.Namespace) {}

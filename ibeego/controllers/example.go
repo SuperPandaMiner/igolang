@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"github.com/beego/beego/v2/server/web/context"
 	"ibeego/models"
+	"strconv"
+	"time"
+	"utils"
 )
 
 type ExampleController struct {
@@ -32,6 +35,10 @@ func (ctrl ExampleController) Forbidden() {
 
 func (ctrl ExampleController) InternalServerError() {
 	ctrl.abort("internal server error")
+}
+
+func (ctrl ExampleController) AbortWithCode() {
+	ctrl.abortWithCode(666, "abort with code")
 }
 
 func (ctrl ExampleController) Panic() {
@@ -72,6 +79,41 @@ func (ctrl ExampleController) Body() {
 	}
 	ctrl.valid(&body)
 	ctrl.writeSuccess(body)
+}
+
+var resourceDir = "./static"
+var resourceBuffer = make(map[string]string)
+
+func (ctrl ExampleController) Upload() {
+	f, _, err := ctrl.GetFile("file")
+	if err != nil {
+		ctrl.abort("upload failed")
+		return
+	}
+	defer f.Close()
+
+	id := strconv.FormatInt(time.Now().UnixMilli(), 10)
+	_ = utils.Mkdir(resourceDir)
+	err = ctrl.SaveToFile("file", resourceDir+"/"+id)
+	if err != nil {
+		ctrl.abort("upload failed")
+		return
+	}
+	resourceBuffer[id] = resourceDir + "/" + id
+	ctrl.writeSuccess(id)
+	return
+}
+
+func (ctrl ExampleController) Download() {
+	id := ctrl.GetString("id")
+	buffer := resourceBuffer[id]
+	if buffer == "" {
+		ctrl.abort404()
+		return
+	}
+	// Content-Disposition attachment
+	ctrl.Ctx.Output.Download(buffer, id)
+	return
 }
 
 func TokenFilter(ctx *context.Context) {

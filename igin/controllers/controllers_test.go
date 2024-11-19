@@ -6,7 +6,9 @@ import (
 	"igin/config"
 	"igin/engine"
 	"igin/routers"
+	"strconv"
 	"testing"
+	"time"
 )
 
 func init() {
@@ -23,6 +25,8 @@ func init() {
 		root.GET("/query", query)
 		root.GET("/path/:id", path)
 		root.POST("/post", post)
+		root.POST("/upload", upload)
+		root.GET("/download", download)
 	}
 
 }
@@ -77,6 +81,42 @@ func post(ctx *gin.Context) {
 	if err := ctx.Bind(&body); err == nil {
 		writeSuccess(ctx, body)
 	}
+}
+
+var resourceDir = "../static"
+var resourceBuffer = make(map[string]string)
+
+func upload(ctx *gin.Context) {
+	uploadErr := errors.New("upload failed")
+
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		abort(ctx, uploadErr)
+		return
+	}
+
+	id := strconv.FormatInt(time.Now().UnixMilli(), 10)
+	err = ctx.SaveUploadedFile(file, resourceDir+"/"+id)
+	if err != nil {
+		abort(ctx, uploadErr)
+		return
+	}
+	resourceBuffer[id] = resourceDir + "/" + id
+	writeSuccess(ctx, id)
+	return
+}
+
+func download(ctx *gin.Context) {
+	id := ctx.Query("id")
+	buffer := resourceBuffer[id]
+	if buffer == "" {
+		abortWithCode(ctx, 404, errors.New("file not found"))
+		return
+	}
+	ctx.Header("Content-Type", "")
+	//ctx.File(buffer)
+	ctx.FileAttachment(buffer, id)
+	return
 }
 
 func tokenFilter(ctx *gin.Context) {

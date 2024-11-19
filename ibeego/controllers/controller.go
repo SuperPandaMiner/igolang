@@ -7,7 +7,8 @@ import (
 	"strings"
 )
 
-const errorHandlerMsgKey = "error"
+const errorHandlerCodeKey = "_code"
+const errorHandlerMsgKey = "_error"
 
 type BaseController struct {
 	web.Controller
@@ -54,6 +55,16 @@ func (ctrl *BaseController) abort403() {
 	ctrl.Abort("403")
 }
 
+func (ctrl *BaseController) abort404() {
+	ctrl.Abort("404")
+}
+
+func (ctrl *BaseController) abortWithCode(code int, err string) {
+	ctrl.Data[errorHandlerCodeKey] = code
+	ctrl.Data[errorHandlerMsgKey] = err
+	ctrl.Abort("0")
+}
+
 func (ctrl *BaseController) writeSuccess(data interface{}) {
 	_ = ctrl.Ctx.JSONResp(models.OkResponse(data))
 }
@@ -80,6 +91,25 @@ func (ctrl *ErrorController) Error404() {
 
 func (ctrl *ErrorController) Error500() {
 	ctrl.error(500, "internal server error")
+}
+
+func (ctrl *ErrorController) Error0() {
+	var code int
+	var err string
+	if c, ok := ctrl.Data[errorHandlerCodeKey].(int); ok {
+		code = c
+	} else {
+		code = 500
+	}
+	if e, ok := ctrl.Data[errorHandlerMsgKey].(string); ok {
+		err = e
+	} else {
+		err = "internal server error"
+	}
+	ctrl.Ctx.Output.Header("Content-Type", "application/json; charset=utf-8")
+	ctrl.Ctx.ResponseWriter.WriteHeader(code)
+	_ = ctrl.Ctx.JSONResp(models.ErrorResponseWithCode(code, err))
+
 }
 
 func (ctrl *ErrorController) error(code int, err string) {

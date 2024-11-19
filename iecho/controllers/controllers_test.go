@@ -7,7 +7,10 @@ import (
 	"iecho/engine"
 	"iecho/logger"
 	"iecho/routers"
+	"strconv"
 	"testing"
+	"time"
+	"utils"
 )
 
 type customType string
@@ -34,6 +37,8 @@ func init() {
 		root.GET("/query", query)
 		root.GET("/path/:id", path)
 		root.POST("/post", post)
+		root.POST("/upload", upload)
+		root.GET("/download", download)
 	}
 }
 
@@ -123,6 +128,43 @@ func post(ctx echo.Context) error {
 	}
 
 	return writeSuccess(ctx, md)
+}
+
+var resourceDir = "../static"
+var resourceBuffer = make(map[string]string)
+
+func upload(ctx echo.Context) error {
+	uploadErr := errors.New("upload failed")
+
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		return abort(uploadErr)
+	}
+	srcFile, err := file.Open()
+	if err != nil {
+		return abort(uploadErr)
+	}
+	defer srcFile.Close()
+
+	id := strconv.FormatInt(time.Now().UnixMilli(), 10)
+	err = utils.SaveFile(srcFile, resourceDir, id)
+	if err != nil {
+		return abort(uploadErr)
+	}
+	resourceBuffer[id] = resourceDir + "/" + id
+	return writeSuccess(ctx, id)
+}
+
+func download(ctx echo.Context) error {
+	id := ctx.QueryParam("id")
+	buffer := resourceBuffer[id]
+	if buffer == "" {
+		return abortWithCode(404, errors.New("file not found"))
+	}
+	//err := ctx.File(buffer)
+	//err := ctx.Inline(buffer, id)
+	err := ctx.Attachment(buffer, id)
+	return err
 }
 
 // Header Token
