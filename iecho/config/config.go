@@ -2,10 +2,10 @@ package config
 
 import (
 	"iconfig"
-	"iconfig/jinzhu"
+	"iconfig/iviper"
 )
 
 func Init(file string) {
-	jinzhu.Register(file)
+	iviper.Register(file)
 	iconfig.Init()
 }

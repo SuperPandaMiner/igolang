@@ -1,8 +1,0 @@
-database:
-    driver: mysql
-    url: root:123456@tcp(127.0.0.1:3306)/iorm?charset=utf8mb4&parseTime=true&loc=Local
-    autoddl: true
-
-logger:
-    out: console
-    level: info

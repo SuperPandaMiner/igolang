@@ -3,13 +3,15 @@ package test
 import (
 	"fmt"
 	"iconfig"
-	"iconfig/jinzhu"
+	"iconfig/iviper"
 	"testing"
 )
 
 func init() {
 	// 使用 jinzhu config
-	jinzhu.Register("config.yml")
+	//jinzhu.Register("../config.yml")
+	// 使用 viper config
+	iviper.Register("../config.yml")
 	iconfig.Init()
 }
 

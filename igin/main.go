@@ -16,7 +16,7 @@ import (
 
 func main() {
 
-	config.Init("../config.yml")
+	config.Init("../iconfig/config.yml")
 
 	logger.Init()
 

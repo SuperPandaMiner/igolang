@@ -25,7 +25,7 @@ func (Example) TableName() string {
 }
 
 func init() {
-	jinzhu.Register("config.yml")
+	jinzhu.Register("../../iconfig/config.yml")
 	iconfig.Init()
 
 	izap.Register()
