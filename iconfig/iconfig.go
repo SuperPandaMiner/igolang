@@ -37,10 +37,6 @@ type LoggerConfig struct {
 	MaxBackups int
 	// 指定日志编号，指定编号则不会读取日志编号文件中的数值
 	LoggerNumber uint64
-}
-
-type ZapConfig struct {
-	LoggerConfig
 	// 是否开启日志压缩，默认不开启
 	Compress bool
 }
@@ -49,7 +45,6 @@ type ConfigLoader interface {
 	LoadServerConfig(*ServerConfig)
 	LoadDatabaseConfig(*DatabaseConfig)
 	LoadLoggerConfig(*LoggerConfig)
-	LoadZapConfig(*ZapConfig)
 }
 
 var Server = &ServerConfig{
@@ -68,16 +63,7 @@ var Logger = &LoggerConfig{
 	MaxBackups:   0,
 	LoggerNumber: 0,
 }
-var Zap = &ZapConfig{
-	LoggerConfig: LoggerConfig{
-		Out:          "console",
-		Level:        "info",
-		MaxSize:      10,
-		MaxAge:       7,
-		MaxBackups:   0,
-		LoggerNumber: 0,
-	},
-}
+
 var Loader ConfigLoader
 
 func Init() {
@@ -87,5 +73,4 @@ func Init() {
 	Loader.LoadServerConfig(Server)
 	Loader.LoadDatabaseConfig(Database)
 	Loader.LoadLoggerConfig(Logger)
-	Loader.LoadZapConfig(Zap)
 }

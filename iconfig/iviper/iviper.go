@@ -29,14 +29,6 @@ func (loader *ViperLoader) LoadLoggerConfig(logger *iconfig.LoggerConfig) {
 	}
 }
 
-func (loader *ViperLoader) LoadZapConfig(zap *iconfig.ZapConfig) {
-	err := viper.UnmarshalKey("logger", &zap.LoggerConfig)
-	if err != nil {
-		panic(err)
-	}
-	zap.Compress = viper.GetBool("logger.compress")
-}
-
 // Register 注册 loader
 // - file：配置文件路径
 func Register(file string) {

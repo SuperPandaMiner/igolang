@@ -58,16 +58,7 @@ func (loader *JinzhuLoader) LoadLoggerConfig(logger *iconfig.LoggerConfig) {
 	logger.MaxAge = loader.config.Logger.MaxAge
 	logger.MaxBackups = loader.config.Logger.MaxBackups
 	logger.LoggerNumber = loader.config.Logger.LoggerNumber
-}
-
-func (loader *JinzhuLoader) LoadZapConfig(zap *iconfig.ZapConfig) {
-	zap.Out = loader.config.Logger.Out
-	zap.Level = loader.config.Logger.Level
-	zap.MaxSize = loader.config.Logger.MaxSize
-	zap.MaxAge = loader.config.Logger.MaxAge
-	zap.MaxBackups = loader.config.Logger.MaxBackups
-	zap.LoggerNumber = loader.config.Logger.LoggerNumber
-	zap.Compress = loader.config.Logger.Compress
+	logger.Compress = loader.config.Logger.Compress
 }
 
 // Register 注册 loader

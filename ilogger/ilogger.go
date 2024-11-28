@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"github.com/natefinch/lumberjack"
+	"iconfig"
 	"io"
 	"os"
 	"strconv"
@@ -20,10 +22,10 @@ const (
 	WarnLevel  = "warn"
 	ErrorLevel = "error"
 
-	LogDir = "log/"
+	logDir = "log/"
 )
 
-const loggerNumberFile = LogDir + "loggerNumber.txt"
+const loggerNumberFile = logDir + "loggerNumber.txt"
 
 var LoggerRegisterFunc func() (Logger, io.Writer)
 var logger Logger
@@ -72,8 +74,32 @@ func Close() {
 	logger.Close()
 }
 
-// 扫描文件获取本次的日志编号
-func GetLoggerNumber() uint64 {
+func FileWriter() io.Writer {
+	loggerNumber := iconfig.Logger.LoggerNumber
+	if loggerNumber == 0 {
+		loggerNumber = getLoggerNumber()
+	}
+
+	name := fmt.Sprintf(logDir+"log_%d.log", loggerNumber)
+
+	writer := &lumberjack.Logger{
+		Filename: name,
+		// 在进行切割之前，日志文件的最大大小 MB
+		MaxSize: iconfig.Logger.MaxSize,
+		// 保留旧文件的最大个数
+		MaxBackups: iconfig.Logger.MaxBackups,
+		// 保留旧文件的最大天数
+		MaxAge: iconfig.Logger.MaxAge,
+		// 是否压缩/归档旧文件
+		Compress: iconfig.Logger.Compress,
+		// 使用本地时间
+		LocalTime: true,
+	}
+	return writer
+}
+
+// getLoggerNumber 扫描文件获取本次的日志编号
+func getLoggerNumber() uint64 {
 	var number uint64
 	fileExist := true
 	file, err := os.OpenFile(loggerNumberFile, os.O_RDWR, 0644)
@@ -89,7 +115,7 @@ func GetLoggerNumber() uint64 {
 	if !fileExist {
 		number = 0
 
-		err = os.MkdirAll(LogDir, 0755)
+		err = os.MkdirAll(logDir, 0755)
 		if err != nil {
 			panic(err)
 		}

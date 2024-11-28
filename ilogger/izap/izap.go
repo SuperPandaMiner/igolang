@@ -1,8 +1,6 @@
 package izap
 
 import (
-	"fmt"
-	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"iconfig"
@@ -39,11 +37,11 @@ func (logger *zapLogger) Close() {
 func Register() {
 	ilogger.LoggerRegisterFunc = func() (ilogger.Logger, io.Writer) {
 		var level zapcore.LevelEnabler
-		if iconfig.Zap.Level == ilogger.DebugLevel {
+		if iconfig.Logger.Level == ilogger.DebugLevel {
 			level = zapcore.DebugLevel
-		} else if iconfig.Zap.Level == ilogger.WarnLevel {
+		} else if iconfig.Logger.Level == ilogger.WarnLevel {
 			level = zapcore.WarnLevel
-		} else if iconfig.Zap.Level == ilogger.ErrorLevel {
+		} else if iconfig.Logger.Level == ilogger.ErrorLevel {
 			level = zapcore.ErrorLevel
 		} else {
 			level = zapcore.InfoLevel
@@ -61,46 +59,27 @@ func Register() {
 
 func zapEncoder() zapcore.Encoder {
 	encoderConfig := zapcore.EncoderConfig{
-		TimeKey:        "Time",
-		LevelKey:       "Level",
-		NameKey:        "Logger",
-		CallerKey:      "Caller",
-		FunctionKey:    zapcore.OmitKey,
-		MessageKey:     "Message",
-		StacktraceKey:  "StackTrace",
-		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    zapcore.CapitalLevelEncoder,
-		EncodeTime:     zapcore.TimeEncoderOfLayout(time.DateTime),
-		EncodeDuration: zapcore.StringDurationEncoder,
-		EncodeCaller:   zapcore.ShortCallerEncoder,
+		TimeKey:          "Time",
+		LevelKey:         "Level",
+		NameKey:          "Logger",
+		CallerKey:        "Caller",
+		FunctionKey:      zapcore.OmitKey,
+		MessageKey:       "Message",
+		StacktraceKey:    "StackTrace",
+		LineEnding:       zapcore.DefaultLineEnding,
+		EncodeLevel:      zapcore.CapitalLevelEncoder,
+		EncodeTime:       zapcore.TimeEncoderOfLayout(time.DateTime),
+		EncodeDuration:   zapcore.StringDurationEncoder,
+		EncodeCaller:     zapcore.ShortCallerEncoder,
+		ConsoleSeparator: " ",
 	}
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
 func zapWriteSyncer() zapcore.WriteSyncer {
-	if iconfig.Zap.Out == ilogger.ConsoleLog {
+	if iconfig.Logger.Out == ilogger.ConsoleLog {
 		return zapcore.AddSync(os.Stdout)
 	} else {
-		loggerNumber := iconfig.Zap.LoggerNumber
-		if loggerNumber == 0 {
-			loggerNumber = ilogger.GetLoggerNumber()
-		}
-
-		name := fmt.Sprintf(ilogger.LogDir+"log_%d.log", loggerNumber)
-
-		_logger := &lumberjack.Logger{
-			Filename: name,
-			// 在进行切割之前，日志文件的最大大小 MB
-			MaxSize: iconfig.Zap.MaxSize,
-			// 保留旧文件的最大个数
-			MaxBackups: iconfig.Zap.MaxBackups,
-			// 保留旧文件的最大天数
-			MaxAge: iconfig.Zap.MaxAge,
-			// 是否压缩/归档旧文件
-			Compress: iconfig.Zap.Compress,
-			// 使用本地时间
-			LocalTime: true,
-		}
-		return zapcore.AddSync(_logger)
+		return zapcore.AddSync(ilogger.FileWriter())
 	}
 }

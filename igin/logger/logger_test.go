@@ -7,7 +7,7 @@ import (
 )
 
 func Test(t *testing.T) {
-	config.Init("../../config.yml")
+	config.Init("../../iconfig/config.yml")
 
 	Init()
 

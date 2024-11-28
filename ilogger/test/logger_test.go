@@ -1,14 +1,21 @@
 package test
 
 import (
+	"iconfig"
+	"iconfig/iviper"
 	"ilogger"
-	"ilogger/izap"
+	"ilogger/izerolog"
 	"testing"
 )
 
 func Test(t *testing.T) {
-	// izap 注册 LoggerRegisterFunc
-	izap.Register()
+	iviper.Register("../../iconfig/config.yml")
+	iconfig.Init()
+
+	// izap
+	//izap.Register()
+	// zerolog
+	izerolog.Register()
 	// 初始化
 	ilogger.Init()
 

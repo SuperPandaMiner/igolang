@@ -21,7 +21,7 @@ func (t *customType) UnmarshalParam(src string) error {
 }
 
 func init() {
-	config.Init("../../config.yml")
+	config.Init("../../iconfig/config.yml")
 
 	logger.Init()
 
