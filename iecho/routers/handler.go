@@ -48,14 +48,9 @@ func errorHandler() echo.HTTPErrorHandler {
 			message = strings.Join(stringErrors, "; ")
 		case errors.As(err, &he):
 			code = he.Code
-			// 404
-			if code == http.StatusNotFound {
-				message = "page not found"
-			} else {
-				switch m := he.Message.(type) {
-				case string:
-					message = m
-				}
+			switch m := he.Message.(type) {
+			case string:
+				message = m
 			}
 		case errors.As(err, &be):
 			code = be.Code
