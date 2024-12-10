@@ -18,10 +18,14 @@ func Router(engine *echo.Echo) {
 	// error 处理
 	engine.HTTPErrorHandler = errorHandler()
 	// 404
-	engine.RouteNotFound("/*", func(ctx echo.Context) error {
+	//engine.RouteNotFound("/*", func(ctx echo.Context) error { // 可指定特定路由 404 处理
+	//	response := models.ErrorResponseWithCode(http.StatusNotFound, "page not found")
+	//	return ctx.JSON(response.Code, response)
+	//})
+	echo.NotFoundHandler = func(ctx echo.Context) error { // 通用的 404 处理
 		response := models.ErrorResponseWithCode(http.StatusNotFound, "page not found")
 		return ctx.JSON(response.Code, response)
-	})
+	}
 
 	// cors
 	engine.Use(cors())
