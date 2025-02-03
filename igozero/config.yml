@@ -1,0 +1,10 @@
+name: igozero
+host: 127.0.0.1
+port: 8080
+
+log:
+    mode: console
+    level: info
+    rotation: size
+    maxSize: 10
+#    StackCooldownMillis: 0
