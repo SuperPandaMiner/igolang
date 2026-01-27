@@ -1,11 +1,11 @@
 package iorm
 
 import (
+	"github.com/igolang/iconfig"
+	"github.com/igolang/ilogger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"iconfig"
-	"ilogger"
 	"log"
 	"time"
 )

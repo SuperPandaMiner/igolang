@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package apprpc;
+option go_package="./apprpc";
+
+import "google/protobuf/any.proto";
+
+message Response {
+  bool success = 1;
+  int32 code = 2;
+  string msg = 3;
+  google.protobuf.Any data = 4;
+}
+
+message Empty {
+}
+
+message PingRequest {
+  int64 ping = 16;
+}
+
+message PingResponse {
+  string pong = 16;
+}
+
+// 请求路径为 /[proto包名].[服务名]/[方法名]
+service AppRpc {
+  rpc Ping(PingRequest) returns(PingResponse);
+  rpc PingPing(PingRequest) returns(Response);
+}

@@ -1,8 +1,8 @@
 package logger
 
 import (
-	"ilogger"
-	"ilogger/izap"
+	"github.com/igolang/ilogger"
+	"github.com/igolang/ilogger/izap"
 )
 
 func Init() {

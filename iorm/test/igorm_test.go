@@ -3,12 +3,12 @@ package test
 import (
 	"errors"
 	"fmt"
+	"github.com/igolang/iconfig"
+	"github.com/igolang/iconfig/jinzhu"
+	"github.com/igolang/ilogger"
+	"github.com/igolang/ilogger/izap"
+	"github.com/igolang/iorm"
 	"gorm.io/gorm"
-	"iconfig"
-	"iconfig/jinzhu"
-	"ilogger"
-	"ilogger/izap"
-	"iorm"
 	"testing"
 )
 

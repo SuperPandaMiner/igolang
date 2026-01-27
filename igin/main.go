@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/igolang/ilogger"
 	"igin/config"
 	"igin/engine"
 	"igin/logger"
 	"igin/orm"
 	"igin/routers"
-	"ilogger"
 	"net/http"
 	"os"
 	"os/signal"

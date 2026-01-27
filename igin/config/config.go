@@ -1,8 +1,8 @@
 package config
 
 import (
-	"iconfig"
-	"iconfig/iviper"
+	"github.com/igolang/iconfig"
+	"github.com/igolang/iconfig/iviper"
 )
 
 func Init(file string) {

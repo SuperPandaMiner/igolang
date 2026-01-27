@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"github.com/igolang/utils"
 	"github.com/labstack/echo/v4"
 	"iecho/config"
 	"iecho/engine"
@@ -10,7 +11,6 @@ import (
 	"strconv"
 	"testing"
 	"time"
-	"utils"
 )
 
 type customType string

@@ -1,6 +1,6 @@
 package orm
 
-import "iorm"
+import "github.com/igolang/iorm"
 
 func Init() {
 	iorm.Init()

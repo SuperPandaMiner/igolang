@@ -2,8 +2,8 @@ package test
 
 import (
 	"fmt"
-	"iconfig"
-	"iconfig/jinzhu"
+	"github.com/igolang/iconfig"
+	"github.com/igolang/iconfig/jinzhu"
 	"testing"
 )
 

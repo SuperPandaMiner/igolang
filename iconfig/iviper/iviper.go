@@ -1,8 +1,8 @@
 package iviper
 
 import (
+	"github.com/igolang/iconfig"
 	"github.com/spf13/viper"
-	"iconfig"
 )
 
 type ViperLoader struct {

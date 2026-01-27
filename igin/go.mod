@@ -7,10 +7,10 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-playground/validator/v10 v10.22.0
 	gorm.io/gorm v1.25.12
-	iconfig v0.0.0
-	ilogger v0.0.0
-	iorm v0.0.0
-	utils v0.0.0
+	github.com/igolang/iconfig v0.0.0
+	github.com/igolang/ilogger v0.0.0
+	github.com/igolang/iorm v0.0.0
+	github.com/igolang/utils v0.0.0
 )
 
 require (
@@ -66,13 +66,13 @@ require (
 	gorm.io/driver/mysql v1.5.7 // indirect
 )
 
-replace iconfig => ../iconfig
+replace github.com/igolang/iconfig => ../iconfig
 
-replace ilogger => ../ilogger
+replace github.com/igolang/ilogger => ../ilogger
 
-replace iorm => ../iorm
+replace github.com/igolang/iorm => ../iorm
 
-replace utils => ../utils
+replace github.com/igolang/utils => ../utils
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.62.1
 

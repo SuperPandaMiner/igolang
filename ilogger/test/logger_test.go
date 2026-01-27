@@ -1,10 +1,10 @@
 package test
 
 import (
-	"iconfig"
-	"iconfig/iviper"
-	"ilogger"
-	"ilogger/izerolog"
+	"github.com/igolang/iconfig"
+	"github.com/igolang/iconfig/iviper"
+	"github.com/igolang/ilogger"
+	"github.com/igolang/ilogger/izerolog"
 	"testing"
 )
 

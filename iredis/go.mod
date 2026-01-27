@@ -1,4 +1,4 @@
-module iredis
+module github.com/igolang/iredis
 
 go 1.22
 

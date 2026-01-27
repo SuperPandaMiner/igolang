@@ -1,8 +1,8 @@
 package logger
 
 import (
+	"github.com/igolang/ilogger"
 	"igin/config"
-	"ilogger"
 	"testing"
 )
 

@@ -1,0 +1,29 @@
+Name: gateway
+Host: 127.0.0.1
+Port: 8888
+
+Upstreams:
+  - Name: app
+    # Http 与 Grpc 二选一
+#    Http:
+#      Target: 127.0.0.1:8080
+#      Prefix: /app
+    Grpc:
+      # 直连
+#      Target: 127.0.0.1:8080
+      # 服务发现
+      Etcd:
+        Hosts:
+          - 10.8.4.117:2379
+        Key: app.rpc
+    ProtoSets:
+      # rpc 需要指定 pb 文件
+      - apprpc.pb
+    Mappings:
+      - Method: GET
+        Path: /ping
+        RpcPath: apprpc.AppRpc/Ping
+      - Method: GET
+        Path: /pingping
+        RpcPath: apprpc.AppRpc/PingPing
+

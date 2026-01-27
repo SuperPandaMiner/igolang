@@ -1,0 +1,10 @@
+
+go 1.22
+
+use (
+	core
+	gateway
+	app
+	configurator
+)
+

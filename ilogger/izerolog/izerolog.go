@@ -2,9 +2,9 @@ package izerolog
 
 import (
 	"fmt"
+	"github.com/igolang/iconfig"
+	"github.com/igolang/ilogger"
 	"github.com/rs/zerolog"
-	"iconfig"
-	"ilogger"
 	"io"
 	"os"
 	"path/filepath"

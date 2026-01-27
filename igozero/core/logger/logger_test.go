@@ -1,13 +1,13 @@
 package logger
 
 import (
+	"github.com/igolang/igozero/core/config"
 	"github.com/zeromicro/go-zero/core/logx"
-	"igozero/config"
 	"testing"
 )
 
 func Test(t *testing.T) {
-	config.Init("../config.yml")
+	config.InitRestConfig("../config.yml")
 
 	Init()
 

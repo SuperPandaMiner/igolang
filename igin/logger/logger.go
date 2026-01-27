@@ -2,8 +2,8 @@ package logger
 
 import (
 	"github.com/gin-gonic/gin"
-	"ilogger"
-	"ilogger/izap"
+	"github.com/igolang/ilogger"
+	"github.com/igolang/ilogger/izap"
 )
 
 func Init() {

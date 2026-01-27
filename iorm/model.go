@@ -1,9 +1,9 @@
 package iorm
 
 import (
+	"github.com/igolang/utils"
 	"gorm.io/gorm"
 	"time"
-	"utils"
 )
 
 type Model struct {

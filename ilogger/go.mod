@@ -1,12 +1,12 @@
-module ilogger
+module github.com/igolang/ilogger
 
 go 1.22
 
 require (
+	github.com/igolang/iconfig v0.0.0
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/rs/zerolog v1.33.0
 	go.uber.org/zap v1.27.0
-	iconfig v0.0.0
 )
 
 require (
@@ -35,7 +35,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace iconfig => ../iconfig
+replace github.com/igolang/iconfig => ../iconfig
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.62.1
 

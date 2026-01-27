@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"iconfig"
+	"github.com/igolang/iconfig"
 	"testing"
 )
 

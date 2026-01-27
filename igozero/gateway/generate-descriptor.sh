@@ -1,0 +1,1 @@
+protoc -I../app --descriptor_set_out=apprpc.pb --include_imports apprpc.proto

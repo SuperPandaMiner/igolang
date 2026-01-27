@@ -1,0 +1,14 @@
+# http server
+name: app
+host: 127.0.0.1
+port: 8080
+
+# rpc server
+Name: app.rpc
+ListenOn: 127.0.0.1:8080
+Etcd:
+  Hosts:
+    - 10.8.4.117:2379
+  Key: app.rpc
+
+Mode: dev

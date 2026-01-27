@@ -2,20 +2,20 @@ package controllers
 
 import (
 	"errors"
+	"github.com/igolang/igozero/core/config"
+	"github.com/igolang/igozero/core/httpengine"
+	"github.com/igolang/igozero/core/logger"
+	"github.com/igolang/igozero/core/models"
+	"github.com/igolang/igozero/core/routers"
+	"github.com/igolang/utils"
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"igozero/config"
-	"igozero/engine"
-	"igozero/logger"
-	"igozero/models"
-	"igozero/routers"
 	"net/http"
 	"testing"
-	"utils"
 )
 
 func init() {
-	config.Init("../config.yml")
+	config.InitRestConfig("../config.yml")
 
 	logger.Init()
 
@@ -127,7 +127,7 @@ func tokenFilter(next http.HandlerFunc) http.HandlerFunc {
 
 func Test(t *testing.T) {
 
-	engine.Run()
+	httpengine.Run()
 
 	select {}
 }

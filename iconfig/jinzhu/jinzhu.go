@@ -1,8 +1,8 @@
 package jinzhu
 
 import (
+	"github.com/igolang/iconfig"
 	"github.com/jinzhu/configor"
-	"iconfig"
 )
 
 type Configuration struct {

@@ -1,0 +1,1 @@
+grpcurl -d '{"ping": 1}' -plaintext 127.0.0.1:8080 apprpc.AppRpc.Ping

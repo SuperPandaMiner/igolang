@@ -6,9 +6,9 @@ import (
 )
 
 func init() {
-	Init("../config.yml")
+	InitRestConfig("../config.yml")
 }
 
 func Test(t *testing.T) {
-	fmt.Println(Config)
+	fmt.Println(RestConfig)
 }

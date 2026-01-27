@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"igozero/routers"
+	"github.com/igolang/igozero/core/routers"
 	"net/http"
 )
 

@@ -2,9 +2,9 @@ package routers
 
 import (
 	"context"
+	"github.com/igolang/igozero/core/models"
 	"github.com/zeromicro/go-zero/rest"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"igozero/models"
 )
 
 var HandlerRegisterFunc = func(engine *rest.Server) {}

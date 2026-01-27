@@ -1,13 +1,13 @@
-module iorm
+module github.com/igolang/iorm
 
 go 1.22
 
 require (
+	github.com/igolang/iconfig v0.0.0
+	github.com/igolang/ilogger v0.0.0
+	github.com/igolang/utils v0.0.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
-	iconfig v0.0.0
-	ilogger v0.0.0
-	utils v0.0.0
 )
 
 require (
@@ -25,8 +25,8 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace iconfig => ../iconfig
+replace github.com/igolang/iconfig => ../iconfig
 
-replace ilogger => ../ilogger
+replace github.com/igolang/ilogger => ../ilogger
 
-replace utils => ../utils
+replace github.com/igolang/utils => ../utils

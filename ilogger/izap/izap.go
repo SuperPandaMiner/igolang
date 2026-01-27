@@ -1,10 +1,10 @@
 package izap
 
 import (
+	"github.com/igolang/iconfig"
+	"github.com/igolang/ilogger"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"iconfig"
-	"ilogger"
 	"io"
 	"os"
 	"time"
