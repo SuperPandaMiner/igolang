@@ -24,7 +24,7 @@ func main() {
 	clientConf.Endpoints = []string{"127.0.0.1:8080"}
 	// 注册中心
 	clientConf.Etcd = discov.EtcdConf{
-		Hosts:              []string{"10.8.4.117:2379"},
+		Hosts:              []string{"127.0.0.1:2379"},
 		Key:                "app.rpc",
 		User:               "",
 		Pass:               "",

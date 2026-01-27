@@ -14,7 +14,7 @@ Upstreams:
       # 服务发现
       Etcd:
         Hosts:
-          - 10.8.4.117:2379
+          - 127.0.0.1:2379
         Key: app.rpc
     ProtoSets:
       # rpc 需要指定 pb 文件
